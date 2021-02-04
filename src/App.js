@@ -1,100 +1,108 @@
-
-import React, { Component } from 'react'
-import  Todoform  from './Components/Todo forms Component/Todoform'
-import Todolist  from './Components/Todo list component/Todolist'
+import React, { Component } from "react";
+import Todoform from "./Components/Add Todo forms Component/Todoform";
+import Todolist from "./Components/Todo list component/Todolist";
+import "./App.css";
 
 export class App extends Component {
-
-  state={
-    todos:[
-    {
-      id:1,
-      name: 'faire la priere ',
-      completed:false,
-      date:"2020-11-12",
-      color:""
-    },
-    {
-      id:2,
-      name: 'to-do app challenge ',
-      completed:false,
-      date:"2020-03-18",
-      color:""
-      
-    },
-    {
-      id:3,
-      name: 'prepare one to one meeting',
-      completed:false,
-      date:"1993-04-06",
-      color:""
-    } 
-  ]
+  state = {
+    todos: JSON.parse(localStorage.getItem("todos")),
   };
 
-  searchTodo=(searchValue)=>{
-    this.setState({todos:[...this.state.todos.filter((el)=> el.name.includes([searchValue]))]})
+  // delete todo
+  deleteTodo = (id) => {
+    const data = JSON.parse(localStorage.getItem("todos"));
+    const newList = data.filter((todo) => todo.id !== id);
+    localStorage.setItem("todos", JSON.stringify(newList));
+    this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
+  };
+  // completed todo
+  checkCompleted = (id) => {
+    const toDoList = JSON.parse(localStorage.getItem("todos"));
+    toDoList.map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+        localStorage.setItem("todos", JSON.stringify(toDoList));
+        this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
+      }
+      return todo;
+    });
+  };
+
+  searchTodo = (e) => {
+    const dataJSON = JSON.parse(localStorage.getItem("todos"));
+    const TodosFiltred = dataJSON.filter((el) =>
+      el.name.toLowerCase().includes([e.target.value.toLowerCase()])
+    );
+    this.setState({ todos: TodosFiltred });
+  };
+
+  handleTodosCompleted =(e)=>{
+    e.preventDefault();
+    const dataJSON = JSON.parse(localStorage.getItem("todos"))
+    const todosCompleted = dataJSON.filter((el)=>el.completed)
+    this.setState({ todos: todosCompleted });
+  }
+  handleTodosunCompleted =(e)=>{
+    e.preventDefault();
+    const dataJSON = JSON.parse(localStorage.getItem("todos"));
+    const todosUncompleted = dataJSON.filter((el)=>!el.completed)
+    this.setState({ todos: todosUncompleted });
   }
 
-  // delete todo
-  deleteTodo =(id)=>{
-    this.setState({todos:[...this.state.todos.filter(todo => todo.id!==id)]})
- 
+  handleAllTodos =(e)=>{
+    e.preventDefault();
+    const dataJSON = JSON.parse(localStorage.getItem("todos"));
+    this.setState({ todos: dataJSON });
   }
-  // completed todo
-  checkCompleted = (id)=>{
-    this.setState({todos:this.state.todos.map((todo,i)=> {
-      if(todo.id===id){
-          todo.completed=!todo.completed
-      }
-      return todo
-    })})
-    
-  }
-// add todo
-  addTodo=(inputValue)=>{
-    const newTodo ={
-      id:this.state.todos.length + 1 ,
-      name:inputValue,
-      completed:false,
-      date:"2020-01-01",
-      color:""
+  // add todo
+  addTodo = (inputValue) => {
+    const newTodo = {
+      id: Date.now(),
+      name: inputValue,
+      completed: false,
+      date: "2020-01-01",
+      color: "",
     };
-    this.setState({todos: [...this.state.todos , newTodo] })
-  }
-  saveChanges =(id, editNameValue,editDateValue,editColorValue)=>{
-    
-    this.setState({todos: this.state.todos.filter((el,i)=>{
-      if(el.id===id ){
-          el.name=editNameValue;
-          el.date=editDateValue;
-          el.color=editColorValue
+    const data = JSON.parse(localStorage.getItem("todos"));
+    const newList = [...data, newTodo];
+    localStorage.setItem("todos", JSON.stringify(newList));
+    this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
+  };
+  saveChanges = (id, editNameValue, editDateValue, editColorValue) => {
+    const toDoList = JSON.parse(localStorage.getItem("todos"));
+    toDoList.map((toDo) => {
+      if (toDo.id === id) {
+        toDo.name = editNameValue;
+        toDo.date = editDateValue;
+        toDo.color = editColorValue;
+        localStorage.setItem("todos", JSON.stringify(toDoList));
+        this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
       }
-        return el
-    })})
-    
-  }
- 
- 
-  
+      return toDo;
+    });
+  };
 
   render() {
     return (
       <div>
-        <div className="card bg-light" style={{ width: "1000px", margin: "50px auto" }}>
-              <Todoform addTodo={this.addTodo}/>
-              <Todolist 
-              todos={this.state.todos} 
-              checkCompleted={this.checkCompleted} 
-              deleteTodo={this.deleteTodo}
-              saveChanges={this.saveChanges}
-              searchTodo={this.searchTodo}
-              />
+        <div className="card" style={{ width: "900px", margin: "50px auto" }}>
+          <Todoform
+            searchTodo={this.searchTodo}
+            handleTodosCompleted={this.handleTodosCompleted}
+            handleTodosunCompleted={this.handleTodosunCompleted}
+            handleAllTodos={this.handleAllTodos}
+          />
+          <Todolist
+            addTodo={this.addTodo}
+            todos={this.state.todos}
+            checkCompleted={this.checkCompleted}
+            deleteTodo={this.deleteTodo}
+            saveChanges={this.saveChanges}
+          />
         </div>
-          </div>
-    )
+      </div>
+    );
   }
 }
 
-export default App
-
+export default App;

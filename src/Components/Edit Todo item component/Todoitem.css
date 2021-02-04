@@ -4,3 +4,13 @@
     text-decoration-color:red ;
     
 }
+
+.nav-item-disabled{
+    pointer-events: none;
+    
+
+}
+
+
+
+
