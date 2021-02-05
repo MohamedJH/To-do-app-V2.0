@@ -9,10 +9,7 @@ class Todolist extends Component {
     inputValue: "",
   };
 
-  changeInputValue = (e) => {
-    console.log((e.target.value))
-    this.setState({ inputValue: e.target.value })
-  }
+  
 
   addValue = (e) => {
     e.preventDefault();
@@ -51,7 +48,7 @@ class Todolist extends Component {
                 className="form-control form-control-sm mx-2 bg-dark  border-0 text-white  me-1"
                 type="search"
                 value={this.state.inputValue}
-                onChange={this.changeInputValue}
+                onChange={(e)=>this.setState({ inputValue: e.target.value })}
               />
             </form>
           </div>

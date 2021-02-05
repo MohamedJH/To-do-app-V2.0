@@ -4,8 +4,12 @@ import Todolist from "./Components/Todo list component/Todolist";
 import "./App.css";
 
 export class App extends Component {
+
+ 
+  
+  
   state = {
-    todos: JSON.parse(localStorage.getItem("todos")),
+    todos: JSON.parse(localStorage.getItem("todos"))||[],
   };
 
   // delete todo
@@ -60,13 +64,25 @@ export class App extends Component {
       id: Date.now(),
       name: inputValue,
       completed: false,
-      date: "2020-01-01",
+      date: "2021-01-01",
       color: "",
     };
-    const data = JSON.parse(localStorage.getItem("todos"));
-    const newList = [...data, newTodo];
-    localStorage.setItem("todos", JSON.stringify(newList));
-    this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
+    let dataJSON = JSON.parse(localStorage.getItem("todos"));
+    console.log(dataJSON)
+    if(dataJSON===null){
+      localStorage.setItem("todos", JSON.stringify([newTodo]))
+      this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
+    }{
+      const newList =[...this.state.todos, newTodo] 
+      localStorage.setItem("todos", JSON.stringify(newList));
+      this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
+    }
+      
+
+    
+    
+    
+    
   };
   saveChanges = (id, editNameValue, editDateValue, editColorValue) => {
     const toDoList = JSON.parse(localStorage.getItem("todos"));
@@ -83,6 +99,7 @@ export class App extends Component {
   };
 
   render() {
+    
     return (
       <div>
         <div className="card" style={{ width: "900px", margin: "50px auto" }}>

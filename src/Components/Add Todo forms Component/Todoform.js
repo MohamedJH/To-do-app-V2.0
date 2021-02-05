@@ -18,10 +18,10 @@ export class Todoform extends Component {
   render() {
     return (
       <div>
-        <div className="card-header">
+        <div className="card-header bg-dark">
           <form onSubmit={this.addValue}>
             <div className="form-row d-flex justify-content-between">
-              <div className="w-75 d-flex justify-content-start">
+              <div className="w-50 d-flex justify-content-start">
                 <button
                   type="submit"
                   className="btn btn-sm border-0 btn-outline-light"
@@ -35,7 +35,7 @@ export class Todoform extends Component {
                 <div
                   className=""
                   style={
-                    this.state.search ? { width: "450px" } : { display: "none" }
+                    this.state.search ? { width: "400px" } : { display: "none" }
                   }
                 >
                   <input
@@ -57,21 +57,21 @@ export class Todoform extends Component {
                   className="btn btn-sm btn-outline-light mx-1 border-0"
                   onClick={this.props.handleAllTodos}
                 >
-                  <FontAwesomeIcon color="white" icon={faTimes} />
+                  Default
                 </button>
                 <button
                   type="submit"
                   className="btn btn-sm btn-outline-danger mx-1 border-0"
                   onClick={this.props.handleTodosunCompleted}
                 >
-                  <FontAwesomeIcon icon={faExclamation} />
+                  None
                 </button>
                 <button
                   type="submit"
                   className="btn btn-sm btn-outline-success mx-1 border-0"
                   onClick={this.props.handleTodosCompleted}
                 >
-                  <FontAwesomeIcon icon={faCheck} />
+                  Done
                 </button>
               </div>
             </div>

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faTrash,
-    faFlag,
-    faBars,
-    faCheckCircle,
-    faEdit,
+  faTrash,
+  faFlag,
+  faBars,
+  faCheckCircle,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./Todoitem.css";
@@ -16,6 +16,10 @@ class Todoitem extends Component {
     editNameValue: this.props.todo.name,
     editDateValue: this.props.todo.date,
     editColorValue: this.props.todo.color,
+  };
+
+  DaysLeft = () => {
+    console.log(this.state.editDateValue.day());
   };
 
   changeEditTodo = () => {
@@ -45,9 +49,34 @@ class Todoitem extends Component {
     );
   };
 
+  alertDeadline = () => {
+    const dateSplit = this.state.editDateValue.split("-");
+    const Day = Number(dateSplit[2]);
+    const Month = Number(dateSplit[1]);
+    const Year = Number(dateSplit[0]);
+
+    const currentDate = new Date();
+    const currentDay = currentDate.getDay();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
+    console.log(Day, Month, Year);
+    console.log(currentDay, currentMonth, currentYear);
+    const TimeLeft =
+      (Year - currentYear) * 365 +
+      (Month - currentMonth) * 30 +
+      (Day - currentDay);
+    
+    return TimeLeft === 0 ? "TODAY": TimeLeft === 1? "TOMORROW":TimeLeft<0? "EXCEED":`${TimeLeft} DAYS`
+  };
+
+  getStyleColorBadge = ()=>{
+    
+    return this.alertDeadline()==="TODAY"||this.alertDeadline()==="EXCEED"? "badge bg-danger text-white":this.alertDeadline()==="TOMORROW"? "badge bg-warning":"badge bg-success text-white"
+  }
+
   render() {
     const {
-      todo: { id, name, completed, date },
+      todo: { id, name, completed},
     } = this.props;
     console.log(this.props.todo);
 
@@ -113,6 +142,10 @@ class Todoitem extends Component {
     );
 
     const Color = this.getStyleColorButton();
+    
+    
+
+    
 
     return (
       <nav
@@ -120,7 +153,14 @@ class Todoitem extends Component {
         style={{ height: "40px" }}
       >
         <div className="container-fluid d-flex justify-content-start">
-          <FontAwesomeIcon size="xs" icon={faBars} color="grey" />
+         
+          <FontAwesomeIcon
+            size="xs"
+            icon={faBars}
+            color="grey"
+            
+          />
+
           <small
             className={
               completed === true
@@ -132,9 +172,9 @@ class Todoitem extends Component {
             {this.state.edit ? editName : name}
           </small>
           <div className="collapse d-flex justify-content-end mx-3">
-            <ul className="navbar-nav mb-2  mb-lg-0">
+            <ul className="navbar-nav mb-  mb-lg-0">
               <li className="nav-item text-secondary mx-2">
-                <small>{this.state.edit ? editTdDate : date}</small>
+                {this.state.edit ? <span>{editTdDate}</span>:<span className={this.getStyleColorBadge()}>{this.alertDeadline()}</span>}
               </li>
             </ul>
           </div>
@@ -179,16 +219,6 @@ class Todoitem extends Component {
           </div>
         </div>
       </nav>
-
-      // <tr className="line">
-      //     <th scope="row">{id}</th>
-      //     <td className={completed === true ? "completed" : ""}>{this.state.edit ? editTdName : name}</td>
-      //     <td><button type="button" className="btn  rounded-pill" onClick={() => this.props.checkCompleted(id)}><FontAwesomeIcon icon={faCheckCircle} color={completed === true ? "green" : ""} /></button></td>
-      //     <td><button type="button" className="btn  rounded-pill" onClick={this.changeEditTodo} disabled={completed ? true : false}><FontAwesomeIcon icon={faEdit} /></button></td>
-      //     <td><button type="button" className="btn  rounded-pill" onClick={() => this.props.deleteTodo(id)} > <FontAwesomeIcon icon={faTrash} /></button></td>
-      //     <td className="py-4">{this.state.edit ? editTdDate : date}</td>
-      //     <th className="py-4">{this.state.edit ? editTdColor : Color}</th>
-      // </tr>
     );
   }
 }
