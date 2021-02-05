@@ -65,18 +65,27 @@ class Todoitem extends Component {
       (Year - currentYear) * 365 +
       (Month - currentMonth) * 30 +
       (Day - currentDay);
-    
-    return TimeLeft === 0 ? "TODAY": TimeLeft === 1? "TOMORROW":TimeLeft<0? "EXCEED":`${TimeLeft} DAYS`
+
+    return TimeLeft === 0
+      ? "TODAY"
+      : TimeLeft === 1
+      ? "TOMORROW"
+      : TimeLeft < 0
+      ? "EXCEED"
+      : `${TimeLeft} DAYS`;
   };
 
-  getStyleColorBadge = ()=>{
-    
-    return this.alertDeadline()==="TODAY"||this.alertDeadline()==="EXCEED"? "badge bg-danger text-white":this.alertDeadline()==="TOMORROW"? "badge bg-warning":"badge bg-success text-white"
-  }
+  getStyleColorBadge = () => {
+    return this.alertDeadline() === "TODAY" || this.alertDeadline() === "EXCEED"
+      ? "badge bg-danger text-white"
+      : this.alertDeadline() === "TOMORROW"
+      ? "badge bg-warning"
+      : "badge bg-success text-white";
+  };
 
   render() {
     const {
-      todo: { id, name, completed},
+      todo: { id, name, completed },
     } = this.props;
     console.log(this.props.todo);
 
@@ -142,10 +151,6 @@ class Todoitem extends Component {
     );
 
     const Color = this.getStyleColorButton();
-    
-    
-
-    
 
     return (
       <nav
@@ -153,13 +158,7 @@ class Todoitem extends Component {
         style={{ height: "40px" }}
       >
         <div className="container-fluid d-flex justify-content-start">
-         
-          <FontAwesomeIcon
-            size="xs"
-            icon={faBars}
-            color="grey"
-            
-          />
+          <FontAwesomeIcon size="xs" icon={faBars} color="grey" />
 
           <small
             className={
@@ -174,7 +173,13 @@ class Todoitem extends Component {
           <div className="collapse d-flex justify-content-end mx-3">
             <ul className="navbar-nav mb-  mb-lg-0">
               <li className="nav-item text-secondary mx-2">
-                {this.state.edit ? <span>{editTdDate}</span>:<span className={this.getStyleColorBadge()}>{this.alertDeadline()}</span>}
+                {this.state.edit ? (
+                  <span>{editTdDate}</span>
+                ) : (
+                  <span className={this.getStyleColorBadge()}>
+                    {this.alertDeadline()}
+                  </span>
+                )}
               </li>
             </ul>
           </div>

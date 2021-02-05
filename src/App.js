@@ -4,12 +4,8 @@ import Todolist from "./Components/Todo list component/Todolist";
 import "./App.css";
 
 export class App extends Component {
-
- 
-  
-  
   state = {
-    todos: JSON.parse(localStorage.getItem("todos"))||[],
+    todos: JSON.parse(localStorage.getItem("todos")) || [],
   };
 
   // delete todo
@@ -40,24 +36,24 @@ export class App extends Component {
     this.setState({ todos: TodosFiltred });
   };
 
-  handleTodosCompleted =(e)=>{
-    e.preventDefault();
-    const dataJSON = JSON.parse(localStorage.getItem("todos"))
-    const todosCompleted = dataJSON.filter((el)=>el.completed)
-    this.setState({ todos: todosCompleted });
-  }
-  handleTodosunCompleted =(e)=>{
+  handleTodosCompleted = (e) => {
     e.preventDefault();
     const dataJSON = JSON.parse(localStorage.getItem("todos"));
-    const todosUncompleted = dataJSON.filter((el)=>!el.completed)
+    const todosCompleted = dataJSON.filter((el) => el.completed);
+    this.setState({ todos: todosCompleted });
+  };
+  handleTodosunCompleted = (e) => {
+    e.preventDefault();
+    const dataJSON = JSON.parse(localStorage.getItem("todos"));
+    const todosUncompleted = dataJSON.filter((el) => !el.completed);
     this.setState({ todos: todosUncompleted });
-  }
+  };
 
-  handleAllTodos =(e)=>{
+  handleAllTodos = (e) => {
     e.preventDefault();
     const dataJSON = JSON.parse(localStorage.getItem("todos"));
     this.setState({ todos: dataJSON });
-  }
+  };
   // add todo
   addTodo = (inputValue) => {
     const newTodo = {
@@ -68,21 +64,16 @@ export class App extends Component {
       color: "",
     };
     let dataJSON = JSON.parse(localStorage.getItem("todos"));
-    console.log(dataJSON)
-    if(dataJSON===null){
-      localStorage.setItem("todos", JSON.stringify([newTodo]))
+    console.log(dataJSON);
+    if (dataJSON === null) {
+      localStorage.setItem("todos", JSON.stringify([newTodo]));
       this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
-    }{
-      const newList =[...this.state.todos, newTodo] 
+    }
+    {
+      const newList = [...this.state.todos, newTodo];
       localStorage.setItem("todos", JSON.stringify(newList));
       this.setState({ todos: JSON.parse(localStorage.getItem("todos")) });
     }
-      
-
-    
-    
-    
-    
   };
   saveChanges = (id, editNameValue, editDateValue, editColorValue) => {
     const toDoList = JSON.parse(localStorage.getItem("todos"));
@@ -99,7 +90,6 @@ export class App extends Component {
   };
 
   render() {
-    
     return (
       <div>
         <div className="card" style={{ width: "900px", margin: "50px auto" }}>

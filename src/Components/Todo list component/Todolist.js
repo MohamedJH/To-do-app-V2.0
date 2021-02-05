@@ -9,18 +9,13 @@ class Todolist extends Component {
     inputValue: "",
   };
 
-  
-
   addValue = (e) => {
     e.preventDefault();
     this.props.addTodo(this.state.inputValue);
     this.setState({ inputValue: "" });
   };
 
-  
-
   render() {
-    
     return (
       <div className="card-body m-auto" style={{ width: "900px" }}>
         {this.props.todos.map((todo, i) => (
@@ -41,14 +36,14 @@ class Todolist extends Component {
               size="xs"
               icon={faPlus}
               color="grey"
-              onClick={(e)=>this.addValue(e)}
+              onClick={(e) => this.addValue(e)}
             />
             <form className="d-flex">
               <input
                 className="form-control form-control-sm mx-2 bg-dark  border-0 text-white  me-1"
                 type="search"
                 value={this.state.inputValue}
-                onChange={(e)=>this.setState({ inputValue: e.target.value })}
+                onChange={(e) => this.setState({ inputValue: e.target.value })}
               />
             </form>
           </div>
