@@ -7,7 +7,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./Todoform.css";
+//import "./Todoform.css";
 
 export class Todoform extends Component {
   state = {
