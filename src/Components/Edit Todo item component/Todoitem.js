@@ -5,7 +5,7 @@ import {
   faFlag,
   faBars,
   faCheckCircle,
-  faEdit,
+  faEdit
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./Todoitem.css";
@@ -15,7 +15,7 @@ class Todoitem extends Component {
     edit: false,
     editNameValue: this.props.todo.name,
     editDateValue: this.props.todo.date,
-    editColorValue: this.props.todo.color,
+    editColorValue: this.props.todo.color
   };
 
   DaysLeft = () => {
@@ -56,22 +56,23 @@ class Todoitem extends Component {
     const Year = Number(dateSplit[0]);
 
     const currentDate = new Date();
-    const currentDay = currentDate.getDay();
+    const currentDay = currentDate.getDate();
     const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
-    console.log(Day, Month, Year);
+    //console.log(Day, Month, Year);
     console.log(currentDay, currentMonth, currentYear);
+    console.log(new Date());
     const TimeLeft =
       (Year - currentYear) * 365 +
       (Month - currentMonth) * 30 +
       (Day - currentDay);
-
+    console.log(Day - currentDay);
     return TimeLeft === 0
       ? "TODAY"
       : TimeLeft === 1
       ? "TOMORROW"
       : TimeLeft < 0
-      ? "EXCEED"
+      ? "DELAY"
       : `${TimeLeft} DAYS`;
   };
 
@@ -85,7 +86,7 @@ class Todoitem extends Component {
 
   render() {
     const {
-      todo: { id, name, completed },
+      todo: { id, name, completed }
     } = this.props;
     console.log(this.props.todo);
 
@@ -95,7 +96,7 @@ class Todoitem extends Component {
           <div className="col">
             <input
               type="text"
-              className="form-control form-control-sm bg-dark border-0 text-white"
+              className="form-control form-control-sm bg-white border-0 text-dark"
               value={this.state.editNameValue}
               onChange={(e) => this.changeTodoName(e)}
             />
@@ -144,7 +145,7 @@ class Todoitem extends Component {
     const editTdDate = (
       <input
         type="date"
-        className="form-control form-control-sm bg-dark border-0 text-white"
+        className="form-control form-control-sm bg-grey border-0 text-dark"
         value={this.state.editDateValue}
         onChange={(e) => this.changeTodoDate(e)}
       />

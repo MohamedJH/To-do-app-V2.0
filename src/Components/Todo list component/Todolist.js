@@ -6,7 +6,7 @@ import Todoitem from "../Edit Todo item component/Todoitem";
 
 class Todolist extends Component {
   state = {
-    inputValue: "",
+    inputValue: ""
   };
 
   addValue = (e) => {

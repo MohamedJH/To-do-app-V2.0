@@ -60,7 +60,7 @@ export class App extends Component {
       id: Date.now(),
       name: inputValue,
       completed: false,
-      date: "2021-01-01",
+      date:new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
       color: "",
     };
     let dataJSON = JSON.parse(localStorage.getItem("todos"));
