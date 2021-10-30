@@ -77,7 +77,7 @@ class Todoitem extends Component {
   };
 
   getStyleColorBadge = () => {
-    return this.alertDeadline() === "TODAY" || this.alertDeadline() === "EXCEED"
+    return this.alertDeadline() === "TODAY" || this.alertDeadline() === "DELAY"
       ? "badge bg-danger text-white"
       : this.alertDeadline() === "TOMORROW"
       ? "badge bg-warning"
@@ -177,7 +177,7 @@ class Todoitem extends Component {
                 {this.state.edit ? (
                   <span>{editTdDate}</span>
                 ) : (
-                  <span className={this.getStyleColorBadge()}>
+                  <span className={completed? "d-none":this.getStyleColorBadge()}>
                     {this.alertDeadline()}
                   </span>
                 )}
