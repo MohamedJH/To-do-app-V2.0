@@ -5,7 +5,7 @@ import {
   faFlag,
   faBars,
   faCheckCircle,
-  faEdit
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./Todoitem.css";
@@ -15,7 +15,7 @@ class Todoitem extends Component {
     edit: false,
     editNameValue: this.props.todo.name,
     editDateValue: this.props.todo.date,
-    editColorValue: this.props.todo.color
+    editColorValue: this.props.todo.color,
   };
 
   DaysLeft = () => {
@@ -73,6 +73,8 @@ class Todoitem extends Component {
       ? "TOMORROW"
       : TimeLeft < 0
       ? "DELAY"
+      : this.props.todo.completed
+      ? "Done"
       : `${TimeLeft} DAYS`;
   };
 
@@ -86,7 +88,7 @@ class Todoitem extends Component {
 
   render() {
     const {
-      todo: { id, name, completed }
+      todo: { id, name, completed },
     } = this.props;
     console.log(this.props.todo);
 
@@ -177,7 +179,7 @@ class Todoitem extends Component {
                 {this.state.edit ? (
                   <span>{editTdDate}</span>
                 ) : (
-                  <span className={completed? "d-none":this.getStyleColorBadge()}>
+                  <span className={this.getStyleColorBadge()}>
                     {this.alertDeadline()}
                   </span>
                 )}
